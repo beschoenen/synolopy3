@@ -28,8 +28,8 @@ class _NasSessionManager(SessionManager):
     def credentials(self, node):
         url = self.api.auth.url()
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-        params = dict(method='login', account=self.login, passwd=self.password,
-                      session=node.path()[:-1], format='cookie', api='SYNO.API.Auth', version=2) # TODO don't hardcode these
+        params = self.api.auth.parameters('login', account=self.login, passwd=self.password,
+                                          session=node.path()[:-1], format='cookie')
 
         resp = requests.post(url, params, None, timeout=10, headers=headers)
         cookie = _NasValidationManager.validate(resp)
