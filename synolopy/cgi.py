@@ -144,7 +144,7 @@ class CGI(PathElement):
                     'has been defined' % node.path()
                 )
             params.update(manager.session(node) or manager.credentials(node))
-        return requests.post(url, None, params, timeout=TIMEOUT, headers=headers)
+        return requests.post(url, params, None, timeout=TIMEOUT, headers=headers)
 
 
 # ------------------------------------------------------------------------------
