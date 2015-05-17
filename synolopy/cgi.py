@@ -1,8 +1,8 @@
 import requests
 
-from Queue import Queue
-from urlparse import urljoin
-from urllib import urlencode
+from queue import Queue
+from urllib.parse import urljoin
+from urllib.parse import urlencode
 
 from synolopy.errors import *
 
