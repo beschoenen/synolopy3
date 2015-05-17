@@ -119,22 +119,22 @@ class CGI(PathElement):
     def path(self):
         return self._path
 
-    def url(self, method=None, **kwargs):
+    def url(self):
         base = super(CGI, self).url()
-        base = '{path}.cgi'.format(path=base)
+        return '{path}.cgi'.format(path=base)
 
+    def parameters(self, method, **kwargs):
         params = self.params
         if method:
             params['method'] = method
             params.update(kwargs)
-
-        if params:
-            return '{url}?{params}'.format(url=base, params=urlencode(params))
-        return base
+        return params
 
     @_with_validation
     def request(self, method, **kwargs):
-        url = self.url(method, **kwargs)
+        url = self.url()
+        params = self.parameters(method, **kwargs)
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
         auth, node = self.auth_required()
         if auth:
@@ -144,10 +144,8 @@ class CGI(PathElement):
                     'Authentication is required by %s but no session manager '
                     'has been defined' % node.path()
                 )
-            session = manager.session(node) or manager.credentials(node)
-            return requests.get(url, cookies=session, timeout=TIMEOUT)
-        else:
-            return requests.get(url, timeout=TIMEOUT)
+            params.update(manager.session(node) or manager.credentials(node))
+        return requests.post(url, None, params, timeout=TIMEOUT, headers=headers)
 
 
 # ------------------------------------------------------------------------------

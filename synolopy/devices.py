@@ -32,7 +32,7 @@ class _NasSessionManager(SessionManager):
 
         resp = requests.get(url, timeout=10, )
         cookie = _NasValidationManager.validate(resp)
-        sid = dict(id=cookie['sid'])
+        sid = dict(_sid=cookie['sid'])
 
         self.session(node, session=sid)
         return sid
