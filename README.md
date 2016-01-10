@@ -7,7 +7,7 @@ Synology is a Python library aimed to help using Synology device's APIs.
 Version
 -------
 
-Current stable version: 0.1.1
+Current stable version: 0.1.2
 
 
 Features
@@ -16,7 +16,7 @@ Features
 ##### Synology NAS (aka DiskStation Manager)
 * [[doc.1]] Download station API
 * [[doc.2]] File station API
-* [[doc.3]] Surveillance station API *(work in progress...)*
+* [doc.3] Video station API
 
 ##### Common Gateway Interface builder
 Since Synology APIs are build using the same pattern, this library also uses and provides tools to instanciate a pythonic consumer for any CGI-based API.
@@ -52,7 +52,7 @@ To start using the NAS API, you need to import the library:
 ```python
 from synolopy import NasApi
 
-nas = NasApi('http://192.168.0.99:5000', 'admin', 'my_super_strong_password')
+nas = NasApi('http://192.168.0.99:5000/webapi/', 'admin', 'my_super_strong_password')
 ```
 
 Basically, any API request follows this pattern:
@@ -114,12 +114,12 @@ file_sharing, file_crtfdr, file_rename, file_MVCP, file_delete, file_extract,
 file_compress, background_task
 
 
-##### Download Station
+##### Video Station
 
-*Work in progress...*
+```python
+nas.videostation.programlist.request(<request>)
+```
 
 
-
-[doc.1]:http://ukdl.synology.com/download/Document/DeveloperGuide/Synology_Download_Station_Web_API.pdf
-[doc.2]:http://ukdl.synology.com/download/Document/DeveloperGuide/Synology_File_Station_API_Guide.pdf
-[doc.3]:http://ukdl.synology.com/download/Document/DeveloperGuide/Surveillance_Station_Web_API.pdf
+[doc.1]:https://global.download.synology.com/download/Document/DeveloperGuide/Synology_Download_Station_Web_API.pdf
+[doc.2]:https://global.download.synology.com/download/Document/DeveloperGuide/Synology_File_Station_API_Guide.pdf
